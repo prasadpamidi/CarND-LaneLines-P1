@@ -42,10 +42,10 @@ In order to draw a single line on the left and right lanes, I modified the draw_
     * Added helper methods get_line_slope() and get_line_intercept()
 * Capture max, min slope and intercept values (which are basically the extreme ends of the lines)
 * Filter each slope_intercepts np-array values into left and right lanes line arrays
-    * I first picked with left lanes lines that has slopes close(0.15) to max slope value and intercept values that are close to max intercept(or the extreme line)  - i guess this can be improved a lot
-    * I did the same for the right lanes lines by filtering lines that have slopes close(0.15) to min slope value and intercept values close to min intercept
+    * I first picked left lanes lines that have slope values close(0.15) to max slope value and intercept values that are close to max intercept(or the extreme line)  - i guess this can be improved a little
+    * I did the same for the right lanes lines by filtering lines that have slope values close(0.15) to min slope value and intercept values close to min intercept
 * Calculate average slope and intercept values for left and right lanes
-    * Here, I calculated the average slope and intercept values for right and left lanes separately. I thought this would give better fit final line
+    * Here, I calculated the average slope and intercept values for right and left lanes separately. I thought this would give a better fit final lane line
 * Finally, I called cv2.line for both left and right lane lines
 
 ### 2. Identify potential shortcomings with your current pipeline
@@ -53,16 +53,13 @@ In order to draw a single line on the left and right lanes, I modified the draw_
 
 These are the shortcomings i noticed by analyzing pipeline performance against test videos
 
-* I noticed that the lane lines(especially left lane line) are fluctuating a little sometimes.
-    *I am guessing this had to deal with the final lane line slope estimation.
-* I noticed that the pipeline processor is not accurate when the lane line colors are not clear.
-    *I should've properly done more work(keep only interested colors like yellow and white) on preprocessing the image before sending the image for canny detection.
-* I noticed that the lanes lines gets disorientated when the car went over a road bump or disturbance.
-    *Little unsure what could be done here.
+* I noticed that the pipeline processor is not accurate when the lane line colors are not clear. Can be noticed in the Optional Challenge video output.
+    *I should've improved the code(keep only interested colors like yellow and white) in preprocessing the image before sending the image for canny detection.
+* I noticed that the lane line intercept/slope calculation is little flawed, can be noticed when processing lane images with road color changes.
 
 
 ### 3. Suggest possible improvements to your pipeline
 
-* Final lane lines slope estimation should become more robust
+* Final lane lines slope/intercept estimation could be more efficient and robust
 * Apply few more colors masks to filter out unneeded colors to reduce noise during canny edge estimation
-* Extrapolation should be able to handle slight hiccups(road bumps etc) between frames
+* Extrapolation should be able to handle slight hiccups(road colors changes etc) between frames
